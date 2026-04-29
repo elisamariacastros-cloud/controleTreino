@@ -17,7 +17,6 @@
 
     <!-- CSS do template -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
-
     <style>
         .navbar-nav .nav-link {
             color: #ffffff !important;  
@@ -30,7 +29,7 @@
 </head>
 
 
-<body id="page-top">
+<body id="page-top style="background-color: #fdf5f5 !important;">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg bg-danger text-uppercase fixed-top" id="mainNav">
             <div class="container">
@@ -41,9 +40,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto bg-danger">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ url('/') }}#home">home</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ url('/') }}#treinos">treinos</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ url('/') }}#novoTreino">novo treino</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/home22">home</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/treinos22">treinos</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/criarTreino22">novo treino</a></li>
                     </ul>
                 </div>
             </div>

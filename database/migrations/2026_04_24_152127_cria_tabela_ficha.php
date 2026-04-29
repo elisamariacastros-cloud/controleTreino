@@ -26,6 +26,9 @@ return new class extends Migration
           ->constrained('treinos')
           ->cascadeOnDelete();
 
+    $table->foreignId('personal_id')
+          ->constrained('personal')
+          ->cascadeOnDelete();      
     $table->timestamps();
 });
     }

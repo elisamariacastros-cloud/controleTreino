@@ -1,70 +1,43 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="page-section portfolio" id="home">
-        <header class="masthead bg-white text-danger text-center">
-            <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image-->
-                <img src="{{ asset('assets/img/imagemTreino.png') }}">
-                <!-- Masthead Heading-->
-                <h1 class="masthead-heading text-uppercase mb-0">Treino+</h1>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star "></i></div>
-                    <div class="divider-custom-line"></div>
-                
-        </header>
-        <!-- Portfolio Section-->
-         </section>
-        <section class="page-section portfolio" id="treinos">
-            <div class="container">
-                <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-danger mb-0">treinos</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line bg-danger"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star text-danger"></i></div>
-                    <div class="divider-custom-line bg-danger"></div>
-                </div>
- 
-    <div class="container text-center">
-        <!-- Descrição -->
-        <p class="mt-4 mb-4 fs-5">
-            Acesse seus treinos cadastrados.
-        </p>
 
-        <!-- Botão principal -->
-        <a href="/treinos" class="btn btn-danger btn-xl px-4">
-            Ver meus treinos →
-        </a>
-
+<div style="position: relative; margin: 3rem 0;">
+    <div style="position: absolute; top: 0; right: 1117;">
+        <span style="color: #dc3545; font-size: 1rem; font-weight: 500;"> <b>BEM-VINDO(A)</b></span>
     </div>
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h1 style="font-size: 5rem; font-weight: 900; text-align: center; margin: 0; color: #343a40;">
+            Treine. <span style="color: #495057;">Supere.</span> <span style="color: #dc3545;">Evolua.</span>
+        </h1>
+        <p style="color: #000; font-size: 1rem; font-weight: 500; margin-top: 1rem; text-align: center;">
+            <b>ORGANIZE SEUS TREINOS DE FORMA SIMPLES E EFICIENTE!</b>
+        </p>
+        <hr style="width: 500px; height: 2px; background-color: #dc3545; border: none; margin: 0 auto;">
+    </div>
+</div>
+
+       <header class="masthead  #fdf5f5 text-danger text-center" style="padding-top: 0; margin-top: 2rem;">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- imagem-->
+        <img src="{{ asset('assets/img/imagemTreino.png') }}" style="width: 500px; height: auto; margin-top: -1rem;">
+        <!-- Masthead Heading-->
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+    <div class="divider-custom-line" style="background-color: #dc3545;"></div>
+    <div class="divider-custom-icon" style="color: #dc3545;">
+        <i class="fas fa-star"></i>
+    </div>
+    <div class="divider-custom-line" style="background-color: #dc3545;"></div>
+</div>
+    </div>
+</header>
+        
 
    
         </section>
         <!-- About Section-->
-        <section class="page-section bg-danger mb-0" id="novoTreino">
-            
-            <div class="container">
-                <!-- About Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-white">novo treino</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                                            
-                <!-- About Section Button-->
-                <div class="text-center mt-4">
-                    <a href="criarTreino" class="btn btn-xl btn-outline-light">
-                        <i class="fas fa-download me-2"></i>
-                        CRIAR TREINO!
-                    </a>
-                </div>
-            </div>
-        </section>
+       
         <!-- Contact Section-->
         <section class="page-section" id="contact">
             <div class="container">
