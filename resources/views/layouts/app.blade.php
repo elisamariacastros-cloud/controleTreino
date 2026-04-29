@@ -14,7 +14,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <!-- CSS do template -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <style>
@@ -25,6 +25,7 @@
         .navbar-nav .nav-link:hover {
             color: #560101 !important;  
         }
+        
     </style>
 </head>
 
@@ -42,7 +43,7 @@
                     <ul class="navbar-nav ms-auto bg-danger">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/home22">home</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/treinos22">treinos</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/criarTreino22">novo treino</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/fichas22">fichas</a></li>
                     </ul>
                 </div>
             </div>

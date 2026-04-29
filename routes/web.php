@@ -22,14 +22,13 @@ Route::get('/concluido', function () {
 });
 
 
-Route::get('/criarTreino22', function () {
-    return view('criarTreino');
-});
-
 
 
 Route::get('/treinos22', function () {
     return view('treinos');
+});
+Route::get('/fichas22', function () {
+    return view('fichas');
 });
 
 
@@ -40,3 +39,19 @@ Route::get('/home22', function () {
     return view('home');
 });
 
+Route::get('/criarTreino', function () {
+    return view('criarTreino');
+});
+Route::get('/criarFicha', function () {
+    return view('criarFicha');
+});
+Route::get('/editarTreino', function () {
+    return view('editarTreino');
+});
+
+Route::get('/treinosCancelar', function () {
+    return view('treinos');
+});
+Route::get('/fichaCancelar', function () {
+    return view('treinos');
+});
