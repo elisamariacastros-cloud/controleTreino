@@ -46,16 +46,6 @@
             >
         </div>
 
-        {{-- Caixa --}}
-        <div class="mb-3">
-            <label class="form-label">Caixa</label>
-            <input 
-                type="text" 
-                name="caixa" 
-                class="form-control" 
-                placeholder="Ex: Peito"
-            >
-        </div>
 
         {{-- Séries, carga e repetição --}}
         <div class="row">
