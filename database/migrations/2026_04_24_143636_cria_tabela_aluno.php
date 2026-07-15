@@ -9,16 +9,16 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::create('aluno',function (Blueprint $table) {
+        Schema::create('alunos',function (Blueprint $table) {
             $table->id();
-             $table->varchar('matricula');
-             $table->foreignId('users_id')->constrained();
+             $table->string('matricula');
+             $table->foreignId('usuario_id')->constrained();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-         Schema::dropIfExists('aluno');
+         Schema::dropIfExists('alunos');
     }
 };

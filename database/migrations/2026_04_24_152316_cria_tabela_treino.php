@@ -9,10 +9,10 @@ return new class extends Migration
    
     public function up(): void
     {
-         Schema::create('treino', function(Blueprint $table){
+         Schema::create('treinos', function(Blueprint $table){
             $table->id();
-            $table->varchar('descricao');
-            $table->varchar('nome');
+            $table->string('descricao');
+            $table->string('nome');
             $table->timestamps();
         });
     }
@@ -20,6 +20,6 @@ return new class extends Migration
     
     public function down(): void
     {
-        Schema::dropIfExists('treino');
+        Schema::dropIfExists('treinos');
     }
 };

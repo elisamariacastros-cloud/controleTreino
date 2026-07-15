@@ -55,3 +55,13 @@ Route::get('/treinosCancelar', function () {
 Route::get('/fichaCancelar', function () {
     return view('treinos');
 });
+
+Route::get('/teste', function () {
+    return [
+        'usuarios' => App\Models\Usuario::count(),
+        'personals' => App\Models\Personal::count(),
+        'alunos' => App\Models\Aluno::count(),
+        'treinos' => App\Models\Treino::count(),
+        'fichas' => App\Models\Ficha::count(),
+    ];
+});
