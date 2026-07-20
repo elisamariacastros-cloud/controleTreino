@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 
 class Aluno extends Model
 {
@@ -12,8 +13,8 @@ class Aluno extends Model
     protected $table = 'alunos'; 
 
     protected $fillable = ['matricula','usuario_id']; 
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(User::class);
     }
 }

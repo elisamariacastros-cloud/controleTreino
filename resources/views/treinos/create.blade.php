@@ -5,7 +5,7 @@
 
     <h2 class="mb-4">Criar Treino</h2>
 
-    <form action="" method="POST">
+    <form action="{{ route('treinos.store') }}" method="POST">
         @csrf
 
         {{-- Nome --}}
@@ -37,7 +37,7 @@
                 Salvar
             </button>
 
-            <a href="/treinosCancelar" class="btn btn-secondary">
+            <a href="{{ route('treinos.index') }}" class="btn btn-secondary">
                 Cancelar
             </a>
         </div>

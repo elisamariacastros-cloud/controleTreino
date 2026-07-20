@@ -1,13 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TreinoController;
+use App\Http\Controllers\FichaController;
+use App\Http\Controllers\AlunoController;
+use Illuminate\Support\Facades\Auth;
+
+Auth::routes();
+
 Route::get('/', function () {
     return view('login');
-});
-Route::get('/criarTreino', function () {
-    return view('criarTreino');
-});
+})->name('login'); 
 
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
 
 Route::get('/acessar', function () {
     return view('home');
@@ -21,47 +28,13 @@ Route::get('/concluido', function () {
     return view('login');
 });
 
+// CRUD Treino 
+Route::resource('treinos', TreinoController::class);
+
+// CRUD Ficha 
+ Route::resource('fichas', FichaController::class);
+
+// CRUD Aluno
+Route::resource('alunos', AlunoController::class)->middleware('auth');
 
 
-
-Route::get('/treinos22', function () {
-    return view('treinos');
-});
-Route::get('/fichas22', function () {
-    return view('fichas');
-});
-
-
-
-
-
-Route::get('/home22', function () {
-    return view('home');
-});
-
-Route::get('/criarTreino', function () {
-    return view('criarTreino');
-});
-Route::get('/criarFicha', function () {
-    return view('criarFicha');
-});
-Route::get('/editarTreino', function () {
-    return view('editarTreino');
-});
-
-Route::get('/treinosCancelar', function () {
-    return view('treinos');
-});
-Route::get('/fichaCancelar', function () {
-    return view('treinos');
-});
-
-Route::get('/teste', function () {
-    return [
-        'usuarios' => App\Models\Usuario::count(),
-        'personals' => App\Models\Personal::count(),
-        'alunos' => App\Models\Aluno::count(),
-        'treinos' => App\Models\Treino::count(),
-        'fichas' => App\Models\Ficha::count(),
-    ];
-});

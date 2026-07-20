@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('personals', function(Blueprint $table){
             $table->id();
             $table->string('cref');
-            $table->foreignId('usuario_id')->constrained();
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

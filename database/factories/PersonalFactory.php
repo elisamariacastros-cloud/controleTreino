@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Personal;
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PersonalFactory extends Factory
@@ -14,7 +14,7 @@ class PersonalFactory extends Factory
     {
         return [
             'cref' => $this->faker->bothify('??####'),
-            'usuario_id' => Usuario::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }

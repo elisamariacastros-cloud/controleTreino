@@ -6,7 +6,7 @@
 
     <h2 class="mb-4">Criar Ficha</h2>
 
-    <form action="" method="POST">{{-- sem action por enquanto --}}
+    <form action="{{ route('fichas.store') }}" method="POST">
         @csrf
 
         {{-- Tipo (A, B, C, D) --}}
@@ -25,15 +25,46 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label">Data Início</label>
-                <input type="date" name="data_inicio" class="form-control" required>
+                <input type="date" name="dataInicio" class="form-control" required>
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Data Fim</label>
-                <input type="date" name="data_fim" class="form-control">
+                <input type="date" name="dataFim" class="form-control">
             </div>
         </div>
+        {{-- Aluno --}}
+<div class="mb-3">
+    <label class="form-label">Aluno</label>
+    <select name="aluno_id" class="form-control" required>
+        <option value="">Selecione</option>
+        @foreach($alunos as $aluno)
+            <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
+        @endforeach
+    </select>
+</div>
 
+{{-- Treino --}}
+<div class="mb-3">
+    <label class="form-label">Treino</label>
+    <select name="treino_id" class="form-control" required>
+        <option value="">Selecione</option>
+        @foreach($treinos as $treino)
+            <option value="{{ $treino->id }}">{{ $treino->nome }}</option>
+        @endforeach
+    </select>
+</div>
+
+{{-- Personal --}}
+<div class="mb-3">
+    <label class="form-label">Personal</label>
+    <select name="personal_id" class="form-control" required>
+        <option value="">Selecione</option>
+        @foreach($personals as $personal)
+            <option value="{{ $personal->id }}">{{ $personal->nome }}</option>
+        @endforeach
+    </select>
+</div>
         {{-- Exercício --}}
         <div class="mb-3">
             <label class="form-label">Exercício</label>
@@ -71,7 +102,7 @@
                 Salvar
             </button>
 
-            <a href="/fichaCancelar" class="btn btn-secondary">
+            <a href="{{ route('fichas.index') }}" class="btn btn-secondary">
                 Cancelar
             </a>
         </div>

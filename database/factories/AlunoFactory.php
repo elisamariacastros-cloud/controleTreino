@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Aluno;
-use App\Models\Usuario;
+use App\Models\User;
+use App\Models\Personal; 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AlunoFactory extends Factory
@@ -14,7 +15,8 @@ class AlunoFactory extends Factory
     {
         return [
             'matricula' => $this->faker->unique()->randomNumber(8),
-            'usuario_id' => Usuario::factory(),
+            'user_id' => User::factory(),
+            'personal_id' => Personal::factory(),
         ];
     }
 }

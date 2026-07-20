@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -14,8 +14,8 @@ class Personal extends Model
 
     protected $fillable = ['cref', 'usuario_id'];
 
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(User::class);
     }
 }
