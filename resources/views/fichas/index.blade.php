@@ -20,45 +20,51 @@
     {{--  Tabela --}}
     <table class="table table-danger">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Exercício</th>
-                <th>Séries</th>
-                <th>Carga</th>
-                <th>Repetições</th>
-                <th>Início</th>
-                <th>Fim</th>
-                <th style="width: 180px;">Ações</th>
-            </tr>
+             <tr>
+        <th>ID</th>
+        <th>Aluno</th>         <!-- NOVO -->
+        <th>Treino</th>        <!-- NOVO -->
+        <th>Personal</th>      <!-- NOVO -->
+        <th>Tipo</th>
+        <th>Exercício</th>
+        <th>Séries</th>
+        <th>Carga</th>
+        <th>Repetições</th>
+        <th>Início</th>
+        <th>Fim</th>
+        <th style="width: 180px;">Ações</th>
+    </tr>
         </thead>
         <tbody>
            @foreach($fichas as $ficha)
-<tr>
-    <td>{{ $ficha->id }}</td>
-    <td>{{ $ficha->tipo }}</td>
-    <td>{{ $ficha->exercicio }}</td>
-    <td>{{ $ficha->series }}</td>
-    <td>{{ $ficha->carga }}kg</td>
-    <td>{{ $ficha->repeticao }}</td>
-    <td>{{ \Carbon\Carbon::parse($ficha->dataInicio)->format('d/m') }}</td>
-    <td>{{ \Carbon\Carbon::parse($ficha->dataFim)->format('d/m') }}</td>
-    <td>
-        <div class="d-flex gap-2">
-            <a href="{{ route('fichas.edit', $ficha->id) }}" class="btn btn-sm btn-link">
-                <i class="bi bi-pencil"></i>
-            </a>
-            <form action="{{ route('fichas.destroy', $ficha->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-link">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </form>
-        </div>
-    </td>
-</tr>
-@endforeach
+    <tr>
+        <td>{{ $ficha->id }}</td>
+        <td>{{ $ficha->aluno->nome ?? '—' }}</td>          
+        <td>{{ $ficha->treino->nome ?? '—' }}</td>        
+        <td>{{ $ficha->personal->nome ?? '—' }}</td>      
+        <td>{{ $ficha->tipo }}</td>
+        <td>{{ $ficha->exercicio }}</td>
+        <td>{{ $ficha->series }}</td>
+        <td>{{ $ficha->carga }}kg</td>
+        <td>{{ $ficha->repeticao }}</td>
+        <td>{{ \Carbon\Carbon::parse($ficha->dataInicio)->format('d/m') }}</td>
+        <td>{{ \Carbon\Carbon::parse($ficha->dataFim)->format('d/m') }}</td>
+        <td>
+            <div class="d-flex gap-2">
+                <a href="{{ route('fichas.edit', $ficha->id) }}" class="btn btn-sm btn-link">
+                    <i class="bi bi-pencil"></i>
+                </a>
+                <form action="{{ route('fichas.destroy', $ficha->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-link">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    @endforeach
         </tbody>
     </table>
 

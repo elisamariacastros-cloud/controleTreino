@@ -6,11 +6,13 @@ use App\Http\Controllers\FichaController;
 use App\Http\Controllers\AlunoController;
 use Illuminate\Support\Facades\Auth;
 
-Auth::routes();
+Auth::routes(); 
 
 Route::get('/', function () {
     return view('login');
-})->name('login'); 
+});
+
+
 
 Route::get('/home', function () {
     return view('home');

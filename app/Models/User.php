@@ -14,27 +14,15 @@ class User extends Authenticatable
 
     protected $table = 'users'; // ← confirme que a tabela é 'users'
 
-    protected $fillable = [
-        'nome',
-        'email',
-        'senha',        
-    ];
+    protected $fillable = ['nome', 'email', 'password'];
+    protected $hidden = ['password', 'remember_token'];
 
-    protected $hidden = [
-        'senha',       
-        'remember_token',
-    ];
-
-    public function getAuthPassword() 
-    {
-        return $this->senha;
-    }
 
     protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'senha' => 'hashed', // 
-        ];
-    }
+{
+    return [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed', // ← mudou de 'senha' para 'password'
+    ];
+}
 }

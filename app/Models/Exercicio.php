@@ -6,37 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Treino extends Model
+class Exercicio extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'treinos';
+    protected $table = 'exercicios';
 
     protected $fillable = [
-        'ficha_id',
-        'tipo',
         'nome',
         'descricao',
     ];
 
-    protected $casts = [
-        'tipo' => 'string', // Se for ENUM, pode castar para string ou criar um enum customizado
-    ];
-
     /**
-     * Relacionamento com Ficha
+     * Relacionamento com os treinos através da tabela pivô treino_exercicios
      */
-    public function ficha()
+    public function treinos()
     {
-        return $this->belongsTo(Ficha::class);
-    }
-
-    /**
-     * Relacionamento com os exercícios através da tabela pivô treino_exercicios
-     */
-    public function exercicios()
-    {
-        return $this->belongsToMany(Exercicio::class, 'treino_exercicios')
+        return $this->belongsToMany(Treino::class, 'treino_exercicios')
                     ->withPivot('ordem', 'series', 'repeticoes', 'carga', 'descanso', 'observacoes')
                     ->withTimestamps();
     }

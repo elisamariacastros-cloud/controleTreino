@@ -31,10 +31,21 @@ class AlunoController extends Controller
 
     public function store(Request $request)
     {
-        $dados = $request->all();
-        $dados['personal_id'] = Auth::id(); // Usa Auth::id()
-        Aluno::create($dados);
-        return redirect()->route('alunos.index');
+        $dados = $request->only([
+        'matricula',
+        'user_id',
+        'data_nascimento',
+        'telefone',
+        'peso',
+        'altura',
+        'objetivo',
+    ]);
+
+    $dados['personal_id'] = Auth::id();
+
+    Aluno::create($dados);
+
+    return redirect()->route('alunos.index');
     }
 
     public function edit(Aluno $aluno)
