@@ -25,4 +25,15 @@ class User extends Authenticatable
         'password' => 'hashed', // ← mudou de 'senha' para 'password'
     ];
 }
+
+        public function personal()
+{
+    return $this->hasOne(Personal::class);
+}
+
+public function aluno()
+{
+    return $this->hasOne(Aluno::class);
+}
+
 }

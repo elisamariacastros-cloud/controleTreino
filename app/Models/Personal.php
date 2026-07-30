@@ -14,7 +14,10 @@ class Personal extends Model
 
     protected $table = 'personals'; 
 
-    protected $fillable = ['cref', 'usuario_id'];
+    protected $fillable = [
+    'cref',
+    'user_id',
+];
 
     
      public function user()
