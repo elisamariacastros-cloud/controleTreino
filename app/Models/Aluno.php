@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Ficha;
-use App\Models\Personal;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,8 +16,8 @@ class Aluno extends Model
 
     protected $fillable = [
         'user_id',
-        'personal_id',
         'matricula',
+        'nome',
         'data_nascimento',
         'telefone',
         'peso',
@@ -32,15 +31,11 @@ class Aluno extends Model
         'altura' => 'decimal:2',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    public function personal()
-    {
-        return $this->belongsTo(Personal::class);
-    }
+   public function user()
+{
+    return $this->belongsTo(User::class);
+}
 
     public function fichas()
     {

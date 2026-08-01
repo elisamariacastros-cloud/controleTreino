@@ -8,69 +8,148 @@ use Illuminate\Support\Facades\Auth;
 
 class AlunoController extends Controller
 {
+    /**
+     * Listar todos os alunos do personal logado
+     */
     public function index()
     {
-        // Pega o usuário logado
-        $user = Auth::user();
-        
-        // Se não tiver usuário, redireciona
-        if (!$user) {
-            return redirect('/login');
-        }
+        $alunos = Aluno::where('user_id', Auth::id())->get();
 
-        // Busca os alunos do personal logado
-        $alunos = Aluno::where('personal_id', $user->id)->get();
-        
         return view('alunos.index', compact('alunos'));
     }
 
+    /**
+     * Mostrar formulário de cadastro
+     */
     public function create()
     {
         return view('alunos.create');
     }
 
+    /**
+     * Cadastrar um novo aluno
+     */
     public function store(Request $request)
     {
-        $dados = $request->only([
-        'matricula',
-        'user_id',
-        'data_nascimento',
-        'telefone',
-        'peso',
-        'altura',
-        'objetivo',
-    ]);
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'matricula' => 'required|string|max:25|unique:alunos,matricula',
+            'data_nascimento' => 'nullable|date|before:today',
+            'telefone' => 'nullable|string|max:20',
+            'peso' => 'nullable|numeric|min:0|max:500',
+            'altura' => 'nullable|numeric|min:0.5|max:3',
+            'objetivo' => 'nullable|string|max:100',
+        ]);
 
-    $dados['personal_id'] = Auth::id();
+        Aluno::create([
+            'user_id' => Auth::id(),
+            'nome' => $request->nome,
+            'matricula' => $request->matricula,
+            'data_nascimento' => $request->data_nascimento,
+            'telefone' => $request->telefone,
+            'peso' => $request->peso,
+            'altura' => $request->altura,
+            'objetivo' => $request->objetivo,
+        ]);
 
-    Aluno::create($dados);
-
-    return redirect()->route('alunos.index');
+        return redirect('/alunos')->with('success', 'Aluno cadastrado com sucesso!');
     }
 
-    public function edit(Aluno $aluno)
+    /**
+     * Exibir um aluno específico
+     */
+    public function show($id)
     {
-        if ($aluno->personal_id != Auth::id()) {
-            return redirect()->route('alunos.index');
+        $aluno = Aluno::with('fichas.treinos.treinoExercicios.exercicio')
+            ->where('user_id', Auth::id())
+            ->find($id);
+
+        if (!$aluno) {
+            return redirect('/alunos')->with('error', 'Aluno não encontrado.');
         }
+
+        return view('alunos.show', compact('aluno'));
+    }
+
+    /**
+     * Mostrar formulário de edição
+     */
+    public function edit($id)
+    {
+        $aluno = Aluno::where('user_id', Auth::id())->find($id);
+
+        if (!$aluno) {
+            return redirect('/alunos')->with('error', 'Aluno não encontrado.');
+        }
+
         return view('alunos.edit', compact('aluno'));
     }
 
-    public function update(Request $request, Aluno $aluno)
+    /**
+     * Atualizar um aluno
+     */
+    public function update(Request $request, $id)
     {
-        if ($aluno->personal_id != Auth::id()) {
-            return redirect()->route('alunos.index');
+        $aluno = Aluno::where('user_id', Auth::id())->find($id);
+
+        if (!$aluno) {
+            return redirect('/alunos')->with('error', 'Aluno não encontrado.');
         }
-        $aluno->update($request->all());
-        return redirect()->route('alunos.index');
+
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'matricula' => 'required|string|max:25|unique:alunos,matricula,' . $aluno->id,
+            'data_nascimento' => 'nullable|date|before:today',
+            'telefone' => 'nullable|string|max:20',
+            'peso' => 'nullable|numeric|min:0|max:500',
+            'altura' => 'nullable|numeric|min:0.5|max:3',
+            'objetivo' => 'nullable|string|max:100',
+        ]);
+
+        $aluno->update([
+            'nome' => $request->nome,
+            'matricula' => $request->matricula,
+            'data_nascimento' => $request->data_nascimento,
+            'telefone' => $request->telefone,
+            'peso' => $request->peso,
+            'altura' => $request->altura,
+            'objetivo' => $request->objetivo,
+        ]);
+
+        return redirect('/alunos')->with('success', 'Aluno atualizado com sucesso!');
     }
 
-    public function destroy(Aluno $aluno)
+    /**
+     * Excluir um aluno
+     */
+    public function destroy($id)
     {
-        if ($aluno->personal_id != Auth::id()) {
-            return redirect()->route('alunos.index');
+        $aluno = Aluno::where('user_id', Auth::id())->find($id);
+
+        if (!$aluno) {
+            return redirect('/alunos')->with('error', 'Aluno não encontrado.');
         }
+
         $aluno->delete();
-        return redirect()->route('alunos.index');
+
+        return redirect('/alunos')->with('success', 'Aluno excluído com sucesso!');
+    }
+
+    /**
+     * Retorna as fichas de um aluno (API)
+     */
+    public function fichas($alunoId)
+    {
+        $aluno = Aluno::with('fichas.treinos.treinoExercicios.exercicio')
+            ->where('user_id', Auth::id())
+            ->find($alunoId);
+
+        if (!$aluno) {
+            return response()->json([
+                'message' => 'Aluno não encontrado.'
+            ], 404);
+        }
+
+        return response()->json($aluno->fichas);
     }
 }

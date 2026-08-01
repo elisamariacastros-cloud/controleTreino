@@ -5,6 +5,8 @@ use App\Http\Controllers\TreinoController;
 use App\Http\Controllers\FichaController;
 use App\Http\Controllers\AlunoController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ExercicioController;
+
 
 Auth::routes(); 
 
@@ -39,4 +41,5 @@ Route::resource('treinos', TreinoController::class);
 // CRUD Aluno
 Route::resource('alunos', AlunoController::class)->middleware('auth');
 
-
+//CRUD Exercicio
+Route::resource('exercicios', ExercicioController::class);

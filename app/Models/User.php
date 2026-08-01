@@ -12,9 +12,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'users'; // ← confirme que a tabela é 'users'
+    protected $table = 'users'; 
 
-    protected $fillable = ['nome', 'email', 'password'];
+    protected $fillable = ['nome', 'email', 'cref','password'];
     protected $hidden = ['password', 'remember_token'];
 
 
@@ -25,15 +25,9 @@ class User extends Authenticatable
         'password' => 'hashed', // ← mudou de 'senha' para 'password'
     ];
 }
-
-        public function personal()
+ 
+public function alunos()
 {
-    return $this->hasOne(Personal::class);
+    return $this->hasMany(Aluno::class);
 }
-
-public function aluno()
-{
-    return $this->hasOne(Aluno::class);
-}
-
 }

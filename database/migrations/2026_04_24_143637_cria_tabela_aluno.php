@@ -12,24 +12,16 @@ return new class extends Migration
         Schema::create('alunos',function (Blueprint $table) {
              $table->id();
 
-        // Conta de acesso do aluno ao aplicativo
+        // Personal responsável pelo aluno
         $table->foreignId('user_id')
         ->constrained('users');
-
-        // Personal responsável pelo aluno
-        $table->foreignId('personal_id')
-        ->constrained('personals');
-
+       $table->string('nome');
         $table->string('matricula')->unique();
-
         $table->date('data_nascimento')->nullable();
         $table->string('telefone', 20)->nullable();
-
         $table->decimal('peso', 5, 2)->nullable();
         $table->decimal('altura', 3, 2)->nullable();
-
         $table->string('objetivo', 100)->nullable();
-
         $table->softDeletes();
         $table->timestamps();
         });

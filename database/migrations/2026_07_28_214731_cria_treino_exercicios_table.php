@@ -17,16 +17,12 @@ return new class extends Migration
             $table->foreignId('exercicio_id')
                   ->constrained('exercicios');
 
-            $table->integer('ordem')->nullable();
-
-            $table->integer('series')->nullable();
-            $table->integer('repeticoes')->nullable();
-
-            $table->decimal('carga', 6, 2)->nullable();
-
-            $table->integer('descanso')->nullable();
-
+            $table->integer('series')->default(3);
+            $table->string('repeticoes')->default('12');
+            $table->string('carga')->nullable();
+            $table->string('descanso')->default('60s');
             $table->text('observacoes')->nullable();
+            $table->integer('ordem')->default(0);
 
             $table->timestamps();
         });

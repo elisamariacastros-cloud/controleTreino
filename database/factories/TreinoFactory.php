@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Treino;
+use App\Models\Ficha;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TreinoFactory extends Factory
@@ -12,8 +13,10 @@ class TreinoFactory extends Factory
     public function definition()
     {
         return [
-            'nome' => $this->faker->word,
-            'descricao' => $this->faker->sentence,
+            'ficha_id' => Ficha::factory(),
+            'tipo' => $this->faker->randomElement(['A', 'B', 'C', 'D']),
+            'nome' => $this->faker->randomElement(['Treino A', 'Treino B', 'Treino C', 'Treino D']),
+            'descricao' => $this->faker->optional()->sentence(),
         ];
     }
 }
