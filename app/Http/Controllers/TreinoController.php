@@ -2,236 +2,206 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ficha;
 use App\Models\Treino;
+use App\Models\Ficha;
+use App\Models\Exercicio;
+use App\Models\TreinoExercicio;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class TreinoController extends Controller
 {
     /**
-     * Listar todos os treinos (View)
+     * Lista todos os treinos.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $query = Treino::with(['ficha.aluno.user', 'treinoExercicios.exercicio']);
-        
-        if ($request->has('ficha_id')) {
-            $query->where('ficha_id', $request->ficha_id);
-        }
-
-        $treinos = $query->get();
-
-        // Retorna a view 'treinos.index' com a lista de treinos
+        $treinos = Treino::with(['ficha.aluno', 'exercicios'])->get();
         return view('treinos.index', compact('treinos'));
     }
 
     /**
-     * Mostrar o formulário para criar um novo treino (View)
+     * Mostra formulário para criar treino.
      */
     public function create()
     {
-        // Carregar todas as fichas para o usuário escolher no select
-        $fichas = Ficha::with('aluno.user')->get();
-        
-        return view('treinos.create', compact('fichas'));
+        $fichas = Ficha::with('aluno')->get();
+        $exercicios = Exercicio::orderBy('nome')->get();
+        return view('treinos.create', compact('fichas', 'exercicios'));
     }
 
     /**
-     * Cadastrar um novo treino (Processa e redireciona)
+     * Salva o treino com seus exercícios.
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        // Validação
+        $request->validate([
             'ficha_id' => 'required|exists:fichas,id',
-            'tipo' => 'required|in:A,B,C,D,E,F,G,ABCDE',
+            'tipo' => 'required|in:A,B,C,D',
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
+            'exercicios' => 'nullable|array',
+            'exercicios.*.exercicio_id' => 'required|exists:exercicios,id',
+            'exercicios.*.series' => 'required|integer|min:1|max:10',
+            'exercicios.*.repeticoes' => 'required|string|max:20',
+            'exercicios.*.carga' => 'nullable|string|max:20',
+            'exercicios.*.descanso' => 'nullable|string|max:20',
+            'exercicios.*.observacoes' => 'nullable|string',
+            'exercicios.*.ordem' => 'nullable|integer|min:1',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        // Cria o treino
+        $treino = Treino::create([
+            'ficha_id' => $request->ficha_id,
+            'tipo' => $request->tipo,
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+        ]);
+
+        // Salva os exercícios
+        if ($request->has('exercicios')) {
+            foreach ($request->exercicios as $index => $exercicioData) {
+                TreinoExercicio::create([
+                    'treino_id' => $treino->id,
+                    'exercicio_id' => $exercicioData['exercicio_id'],
+                    'series' => $exercicioData['series'],
+                    'repeticoes' => $exercicioData['repeticoes'],
+                    'carga' => $exercicioData['carga'] ?? null,
+                    'descanso' => $exercicioData['descanso'] ?? null,
+                    'observacoes' => $exercicioData['observacoes'] ?? null,
+                    'ordem' => $exercicioData['ordem'] ?? ($index + 1),
+                ]);
+            }
         }
 
-        $ficha = Ficha::find($request->ficha_id);
-        if (!$ficha) {
-            return redirect()->back()->with('error', 'Ficha não encontrada')->withInput();
-        }
-
-        Treino::create($request->all());
-
-        return redirect()->route('treinos.index')->with('success', 'Treino cadastrado com sucesso!');
+        return redirect()->route('fichas.show', $treino->ficha_id)
+            ->with('success', 'Treino criado com sucesso!');
     }
 
     /**
-     * Exibir um treino específico (View)
-     */
-    public function show($id)
-    {
-        $treino = Treino::with(['ficha.aluno.user', 'treinoExercicios.exercicio'])->find($id);
-        
-        if (!$treino) {
-            return redirect()->route('treinos.index')->with('error', 'Treino não encontrado');
-        }
-
-        return view('treinos.show', compact('treino'));
-    }
-
-    /**
-     * Mostrar o formulário para editar um treino (View)
+     * Mostra formulário para editar treino.
      */
     public function edit($id)
     {
-        $treino = Treino::with(['ficha.aluno.user', 'treinoExercicios.exercicio'])->find($id);
+        $treino = Treino::with(['ficha.aluno', 'exercicios'])->findOrFail($id);
+        $fichas = Ficha::with('aluno')->get();
+        $exercicios = Exercicio::orderBy('nome')->get();
         
-        if (!$treino) {
-            return redirect()->route('treinos.index')->with('error', 'Treino não encontrado');
-        }
-
-        // Carrega as fichas para o select
-        $fichas = Ficha::with('aluno.user')->get();
-        // Carrega todos os exercícios disponíveis para adicionar ao treino
-        $exerciciosDisponiveis = \App\Models\Exercicio::all();
-
-        return view('treinos.edit', compact('treino', 'fichas', 'exerciciosDisponiveis'));
+        return view('treinos.edit', compact('treino', 'fichas', 'exercicios'));
     }
 
     /**
-     * Atualizar um treino (Processa e redireciona)
+     * Atualiza o treino com seus exercícios.
      */
     public function update(Request $request, $id)
     {
-        $treino = Treino::find($id);
-        
-        if (!$treino) {
-            return redirect()->route('treinos.index')->with('error', 'Treino não encontrado');
-        }
+        $treino = Treino::findOrFail($id);
 
-        $validator = Validator::make($request->all(), [
-            'tipo' => 'sometimes|in:A,B,C,D,E,F,G,ABCDE',
-            'nome' => 'sometimes|string|max:255',
+        // Validação
+        $request->validate([
+            'ficha_id' => 'required|exists:fichas,id',
+            'tipo' => 'required|in:A,B,C,D',
+            'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
-            'ficha_id' => 'sometimes|exists:fichas,id',
+            'exercicios' => 'nullable|array',
+            'exercicios.*.id' => 'nullable|exists:treino_exercicios,id',
+            'exercicios.*.exercicio_id' => 'required|exists:exercicios,id',
+            'exercicios.*.series' => 'required|integer|min:1|max:10',
+            'exercicios.*.repeticoes' => 'required|string|max:20',
+            'exercicios.*.carga' => 'nullable|string|max:20',
+            'exercicios.*.descanso' => 'nullable|string|max:20',
+            'exercicios.*.observacoes' => 'nullable|string',
+            'exercicios.*.ordem' => 'nullable|integer|min:1',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        // Atualiza o treino
+        $treino->update([
+            'ficha_id' => $request->ficha_id,
+            'tipo' => $request->tipo,
+            'nome' => $request->nome,
+            'descricao' => $request->descricao,
+        ]);
+
+        // Pega os IDs dos exercícios existentes
+        $existingIds = $treino->treinoExercicios->pluck('id')->toArray();
+        $submittedIds = [];
+
+        // Atualiza ou cria os exercícios
+        if ($request->has('exercicios')) {
+            foreach ($request->exercicios as $index => $exercicioData) {
+                if (isset($exercicioData['id']) && in_array($exercicioData['id'], $existingIds)) {
+                    // Atualiza existente
+                    $treinoExercicio = TreinoExercicio::find($exercicioData['id']);
+                    $treinoExercicio->update([
+                        'exercicio_id' => $exercicioData['exercicio_id'],
+                        'series' => $exercicioData['series'],
+                        'repeticoes' => $exercicioData['repeticoes'],
+                        'carga' => $exercicioData['carga'] ?? null,
+                        'descanso' => $exercicioData['descanso'] ?? null,
+                        'observacoes' => $exercicioData['observacoes'] ?? null,
+                        'ordem' => $exercicioData['ordem'] ?? ($index + 1),
+                    ]);
+                    $submittedIds[] = $exercicioData['id'];
+                } else {
+                    // Cria novo
+                    $novo = TreinoExercicio::create([
+                        'treino_id' => $treino->id,
+                        'exercicio_id' => $exercicioData['exercicio_id'],
+                        'series' => $exercicioData['series'],
+                        'repeticoes' => $exercicioData['repeticoes'],
+                        'carga' => $exercicioData['carga'] ?? null,
+                        'descanso' => $exercicioData['descanso'] ?? null,
+                        'observacoes' => $exercicioData['observacoes'] ?? null,
+                        'ordem' => $exercicioData['ordem'] ?? ($index + 1),
+                    ]);
+                    $submittedIds[] = $novo->id;
+                }
+            }
         }
 
-        $treino->fill($request->only([
-            'tipo', 'nome', 'descricao', 'ficha_id'
-        ]));
-        $treino->save();
+        // Remove exercícios que não foram enviados
+        $toDelete = array_diff($existingIds, $submittedIds);
+        if (!empty($toDelete)) {
+            TreinoExercicio::whereIn('id', $toDelete)->delete();
+        }
 
-        return redirect()->route('treinos.index')->with('success', 'Treino atualizado com sucesso!');
+        return redirect()->route('fichas.show', $treino->ficha_id)
+            ->with('success', 'Treino atualizado com sucesso!');
     }
 
     /**
-     * Deletar um treino (soft delete)
+     * Remove o treino (soft delete).
      */
     public function destroy($id)
     {
-        $treino = Treino::find($id);
+        $treino = Treino::findOrFail($id);
+        $ficha_id = $treino->ficha_id;
         
-        if (!$treino) {
-            return redirect()->route('treinos.index')->with('error', 'Treino não encontrado');
-        }
-
+        // Remove os exercícios relacionados
+        $treino->treinoExercicios()->delete();
+        
+        // Remove o treino
         $treino->delete();
 
-        return redirect()->route('treinos.index')->with('success', 'Treino deletado com sucesso!');
+        return redirect()->route('fichas.show', $ficha_id)
+            ->with('success', 'Treino excluído com sucesso!');
     }
 
     /**
-     * Adicionar exercício ao treino
+     * Reordenar exercícios (AJAX).
      */
-    public function addExercicio(Request $request, $treinoId)
+    public function reorder(Request $request, $id)
     {
-        $treino = Treino::find($treinoId);
-        
-        if (!$treino) {
-            return redirect()->route('treinos.index')->with('error', 'Treino não encontrado');
-        }
-
-        $validator = Validator::make($request->all(), [
-            'exercicio_id' => 'required|exists:exercicios,id',
-            'ordem' => 'required|integer|min:1',
-            'series' => 'required|integer|min:1|max:10',
-            'repetições' => 'required|integer|min:1|max:100',
-            'carga' => 'nullable|numeric|min:0',
-            'descanso' => 'nullable|integer|min:0|max:300',
-            'observacoes' => 'nullable|string',
+        $request->validate([
+            'ordens' => 'required|array',
         ]);
 
-        if ($validator->fails()) {
-            // Redireciona de volta para a página de EDIÇÃO do treino com os erros
-            return redirect()->route('treinos.edit', $treinoId)->withErrors($validator)->withInput();
+        foreach ($request->ordens as $exercicioId => $ordem) {
+            TreinoExercicio::where('id', $exercicioId)
+                ->where('treino_id', $id)
+                ->update(['ordem' => $ordem]);
         }
 
-        $treino->treinoExercicios()->create($request->all());
-
-        // Volta para a página de edição do treino com mensagem de sucesso
-        return redirect()->route('treinos.edit', $treinoId)->with('success', 'Exercício adicionado ao treino com sucesso!');
-    }
-
-    /**
-     * Remover exercício do treino
-     */
-    public function removeExercicio($treinoId, $exercicioId)
-    {
-        $treino = Treino::find($treinoId);
-        
-        if (!$treino) {
-            return redirect()->route('treinos.index')->with('error', 'Treino não encontrado');
-        }
-
-        $treinoExercicio = $treino->treinoExercicios()->where('exercicio_id', $exercicioId)->first();
-        
-        if (!$treinoExercicio) {
-            return redirect()->route('treinos.edit', $treinoId)->with('error', 'Exercício não encontrado neste treino');
-        }
-
-        $treinoExercicio->delete();
-
-        // Volta para a página de edição do treino
-        return redirect()->route('treinos.edit', $treinoId)->with('success', 'Exercício removido do treino com sucesso!');
-    }
-
-    /**
-     * Atualizar exercício no treino
-     */
-    public function updateExercicio(Request $request, $treinoId, $exercicioId)
-    {
-        $treino = Treino::find($treinoId);
-        
-        if (!$treino) {
-            return redirect()->route('treinos.index')->with('error', 'Treino não encontrado');
-        }
-
-        $treinoExercicio = $treino->treinoExercicios()->where('exercicio_id', $exercicioId)->first();
-        
-        if (!$treinoExercicio) {
-            return redirect()->route('treinos.edit', $treinoId)->with('error', 'Exercício não encontrado neste treino');
-        }
-
-        $validator = Validator::make($request->all(), [
-            'ordem' => 'sometimes|integer|min:1',
-            'series' => 'sometimes|integer|min:1|max:10',
-            'repetições' => 'sometimes|integer|min:1|max:100',
-            'carga' => 'nullable|numeric|min:0',
-            'descanso' => 'nullable|integer|min:0|max:300',
-            'observacoes' => 'nullable|string',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('treinos.edit', $treinoId)->withErrors($validator)->withInput();
-        }
-
-        $treinoExercicio->fill($request->only([
-            'ordem', 'series', 'repetições', 'carga', 'descanso', 'observacoes'
-        ]));
-        $treinoExercicio->save();
-
-        return redirect()->route('treinos.edit', $treinoId)->with('success', 'Exercício atualizado no treino com sucesso!');
+        return response()->json(['success' => true]);
     }
 }

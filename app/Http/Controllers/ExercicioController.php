@@ -4,24 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Exercicio;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ExercicioController extends Controller
 {
     /**
-     * Listar todos os exercícios (View)
+     * Lista todos os exercícios.
      */
     public function index()
     {
-        // Pega todos os exercícios (se usar soft delete, pode adicionar ->withTrashed() se quiser ver os deletados)
+        // Pega todos os exercicios
         $exercicios = Exercicio::all();
-        
-        // Retorna a view 'exercicios.index' passando a lista de exercícios
+
+        // Retorna a view 'exercicios.index' passando a lista de exercicios
         return view('exercicios.index', compact('exercicios'));
     }
 
     /**
-     * Mostrar o formulário para criar um novo exercício (View)
+     * Mostra formulário para criar exercício.
      */
     public function create()
     {
@@ -29,94 +28,66 @@ class ExercicioController extends Controller
     }
 
     /**
-     * Cadastrar um novo exercício (Processa o formulário e redireciona)
+     * Salva um novo exercício.
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:255|unique:exercicios,nome',
+        $request->validate([
+            'nome' => 'required|string|max:255|unique:exercicios',
             'descricao' => 'nullable|string',
         ]);
 
-        if ($validator->fails()) {
-            // Se falhar, volta para a página anterior com os erros e os dados preenchidos
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
         Exercicio::create($request->all());
 
-        // Redireciona para a listagem com uma mensagem de sucesso
-        return redirect()->route('exercicios.index')->with('success', 'Exercício cadastrado com sucesso!');
+        return redirect()->route('exercicios.index')
+            ->with('success', 'Exercício criado com sucesso!');
     }
 
     /**
-     * Exibir um exercício específico (View)
+     * Mostra um exercício específico.
      */
     public function show($id)
     {
-        $exercicio = Exercicio::find($id);
-        
-        if (!$exercicio) {
-            return redirect()->route('exercicios.index')->with('error', 'Exercício não encontrado');
-        }
-
+        $exercicio = Exercicio::findOrFail($id);
         return view('exercicios.show', compact('exercicio'));
     }
 
     /**
-     * Mostrar o formulário para editar um exercício (View)
+     * Mostra formulário para editar exercício.
      */
     public function edit($id)
     {
-        $exercicio = Exercicio::find($id);
-        
-        if (!$exercicio) {
-            return redirect()->route('exercicios.index')->with('error', 'Exercício não encontrado');
-        }
-
+        $exercicio = Exercicio::findOrFail($id);
         return view('exercicios.edit', compact('exercicio'));
     }
 
     /**
-     * Atualizar um exercício (Processa o formulário de edição)
+     * Atualiza um exercício.
      */
     public function update(Request $request, $id)
     {
-        $exercicio = Exercicio::find($id);
-        
-        if (!$exercicio) {
-            return redirect()->route('exercicios.index')->with('error', 'Exercício não encontrado');
-        }
+        $exercicio = Exercicio::findOrFail($id);
 
-        $validator = Validator::make($request->all(), [
-            // O 'unique' ignora o ID atual para não dar erro de nome duplicado
-            'nome' => 'sometimes|string|max:255|unique:exercicios,nome,' . $id,
+        $request->validate([
+            'nome' => 'required|string|max:255|unique:exercicios,nome,' . $id,
             'descricao' => 'nullable|string',
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+        $exercicio->update($request->all());
 
-        $exercicio->fill($request->only(['nome', 'descricao']));
-        $exercicio->save();
-
-        return redirect()->route('exercicios.index')->with('success', 'Exercício atualizado com sucesso!');
+        return redirect()->route('exercicios.index')
+            ->with('success', 'Exercício atualizado com sucesso!');
     }
 
     /**
-     * Deletar um exercício (Processa a exclusão e redireciona)
+     * Remove um exercício.
      */
     public function destroy($id)
     {
-        $exercicio = Exercicio::find($id);
-        
-        if (!$exercicio) {
-            return redirect()->route('exercicios.index')->with('error', 'Exercício não encontrado');
-        }
-
+        $exercicio = Exercicio::findOrFail($id);
         $exercicio->delete();
 
-        return redirect()->route('exercicios.index')->with('success', 'Exercício deletado com sucesso!');
+        return redirect()->route('exercicios.index')
+            ->with('success', 'Exercício excluído com sucesso!');
     }
 }

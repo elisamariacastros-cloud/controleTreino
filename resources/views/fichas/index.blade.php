@@ -5,66 +5,90 @@
 
     <h2 class="mb-4">Gerenciar Fichas</h2>
 
-    {{--  Pesquisa + botão criar --}}
     <div class="d-flex justify-content-between mb-3">
-        <input 
-            type="text" 
-            class="form-control w-50" 
+        <input
+            type="text"
+            class="form-control w-50"
             placeholder="Buscar fichas...">
 
         <a href="{{ route('fichas.create') }}" class="btn btn-danger ms-3">
-            Criar ficha
+            Criar Ficha
         </a>
     </div>
 
-    {{--  Tabela --}}
-    <table class="table table-danger">
-        <thead>
-             <tr>
-        <th>ID</th>
-        <th>Aluno</th>         <!-- NOVO -->
-        <th>Treino</th>        <!-- NOVO -->
-        <th>Personal</th>      <!-- NOVO -->
-        <th>Tipo</th>
-        <th>Exercício</th>
-        <th>Séries</th>
-        <th>Carga</th>
-        <th>Repetições</th>
-        <th>Início</th>
-        <th>Fim</th>
-        <th style="width: 180px;">Ações</th>
-    </tr>
+    <table class="table table-danger table-striped table-hover">
+        <thead class="table-danger">
+            <tr>
+                <th>ID</th>
+                <th>Nome da Ficha</th>
+                <th>Aluno</th>
+                <th>Data Início</th>
+                <th>Data Fim</th>
+                <th>Observações</th>
+                <th style="width: 220px;">Ações</th>
+            </tr>
         </thead>
+
         <tbody>
-           @foreach($fichas as $ficha)
-    <tr>
-        <td>{{ $ficha->id }}</td>
-        <td>{{ $ficha->aluno->nome ?? '—' }}</td>          
-        <td>{{ $ficha->treino->nome ?? '—' }}</td>        
-        <td>{{ $ficha->personal->nome ?? '—' }}</td>      
-        <td>{{ $ficha->tipo }}</td>
-        <td>{{ $ficha->exercicio }}</td>
-        <td>{{ $ficha->series }}</td>
-        <td>{{ $ficha->carga }}kg</td>
-        <td>{{ $ficha->repeticao }}</td>
-        <td>{{ \Carbon\Carbon::parse($ficha->dataInicio)->format('d/m') }}</td>
-        <td>{{ \Carbon\Carbon::parse($ficha->dataFim)->format('d/m') }}</td>
-        <td>
-            <div class="d-flex gap-2">
-                <a href="{{ route('fichas.edit', $ficha->id) }}" class="btn btn-sm btn-link">
-                    <i class="bi bi-pencil"></i>
-                </a>
-                <form action="{{ route('fichas.destroy', $ficha->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-link">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </form>
-            </div>
-        </td>
-    </tr>
-    @endforeach
+            @forelse($fichas as $ficha)
+                <tr>
+                    <td>{{ $ficha->id }}</td>
+
+                    <td>{{ $ficha->nome }}</td>
+
+                    <td>{{ $ficha->aluno->nome ?? '-' }}</td>
+
+                    <td>
+                        {{ $ficha->data_inicio ? \Carbon\Carbon::parse($ficha->data_inicio)->format('d/m/Y') : '-' }}
+                    </td>
+
+                    <td>
+                        {{ $ficha->data_fim ? \Carbon\Carbon::parse($ficha->data_fim)->format('d/m/Y') : '-' }}
+                    </td>
+
+                    <td>{{ $ficha->observacoes ?? '-' }}</td>
+
+                    <td>
+                        <div class="d-flex gap-2">
+
+                            <a href="{{ route('fichas.edit', $ficha->id) }}"
+                               class="btn btn-sm text-danger">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <div class="d-flex gap-2">
+
+                            
+                            <a href="{{ route('fichas.show', $ficha->id) }}"
+                            class="btn btn-sm btn-link text-danger"
+                            title="Visualizar">
+                                <i class="bi bi-eye"></i>
+                            </a>
+
+                            <form action="{{ route('fichas.destroy', $ficha->id) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Deseja excluir esta ficha?')">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-sm btn-link text-danger">
+                                <i class="bi bi-trash"></i>
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </td>
+
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center">
+                        Nenhuma ficha cadastrada.
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 

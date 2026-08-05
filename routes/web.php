@@ -6,15 +6,13 @@ use App\Http\Controllers\FichaController;
 use App\Http\Controllers\AlunoController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ExercicioController;
-
+use App\Http\Controllers\TreinoExercicioController;
 
 Auth::routes(); 
 
 Route::get('/', function () {
     return view('login');
 });
-
-
 
 Route::get('/home', function () {
     return view('home');
@@ -36,10 +34,16 @@ Route::get('/concluido', function () {
 Route::resource('treinos', TreinoController::class);
 
 // CRUD Ficha 
- Route::resource('fichas', FichaController::class);
+Route::resource('fichas', FichaController::class);
 
 // CRUD Aluno
 Route::resource('alunos', AlunoController::class)->middleware('auth');
 
-//CRUD Exercicio
+// CRUD Exercicio
 Route::resource('exercicios', ExercicioController::class);
+
+// Criar treino com ficha_id
+Route::get('treinos/create/{ficha_id}', [TreinoController::class, 'create'])->name('treinos.create');
+
+// Reordenar exercícios do treino (AJAX)
+Route::post('treinos/{id}/reorder', [TreinoController::class, 'reorder'])->name('treinos.reorder');

@@ -9,16 +9,29 @@
         @csrf
         @method('PUT')
 
-        {{-- Tipo --}}
+        {{-- Nome --}}
         <div class="mb-3">
-            <label class="form-label">Tipo da Ficha</label>
-            <select name="tipo" class="form-control" required>
-                <option value="">Selecione</option>
-                @foreach(['A','B','C','D'] as $tipo)
-                    <option value="{{ $tipo }}" {{ $ficha->tipo == $tipo ? 'selected' : '' }}>
-                        {{ $tipo }}
+            <label class="form-label">Nome da Ficha</label>
+    <input
+        type="text"
+        name="nome"
+        class="form-control"
+        value="{{ $ficha->nome }}"
+        required>
+        </div>
+
+        {{-- Aluno --}}
+        <div class="mb-3">
+            <label class="form-label">Aluno</label>
+            <select name="aluno_id" class="form-control" required>
+
+                @foreach($alunos as $aluno)
+                    <option value="{{ $aluno->id }}"
+                        {{ $ficha->aluno_id == $aluno->id ? 'selected' : '' }}>
+                        {{ $aluno->nome }}
                     </option>
                 @endforeach
+
             </select>
         </div>
 
@@ -26,79 +39,41 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label">Data Início</label>
-                <input type="date" name="dataInicio" class="form-control" value="{{ $ficha->dataInicio }}" required>
+                <input
+                    type="date"
+                    name="data_inicio"
+                    class="form-control"
+                    value="{{ $ficha->data_inicio }}"
+                    required>
             </div>
+
             <div class="col-md-6 mb-3">
                 <label class="form-label">Data Fim</label>
-                <input type="date" name="dataFim" class="form-control" value="{{ $ficha->dataFim }}">
+                <input
+                    type="date"
+                    name="data_fim"
+                    class="form-control"
+                    value="{{ $ficha->data_fim }}">
             </div>
         </div>
 
-        {{-- Aluno --}}
+        {{-- Observações --}}
         <div class="mb-3">
-            <label class="form-label">Aluno</label>
-            <select name="aluno_id" class="form-control" required>
-                <option value="">Selecione</option>
-                @foreach($alunos as $aluno)
-                    <option value="{{ $aluno->id }}" {{ $ficha->aluno_id == $aluno->id ? 'selected' : '' }}>
-                        {{ $aluno->nome }}
-                    </option>
-                @endforeach
-            </select>
+            <label class="form-label">Observações</label>
+            <textarea
+                name="observacoes"
+                class="form-control"
+                rows="4">{{ $ficha->observacoes }}</textarea>
         </div>
 
-        {{-- Treino --}}
-        <div class="mb-3">
-            <label class="form-label">Treino</label>
-            <select name="treino_id" class="form-control" required>
-                <option value="">Selecione</option>
-                @foreach($treinos as $treino)
-                    <option value="{{ $treino->id }}" {{ $ficha->treino_id == $treino->id ? 'selected' : '' }}>
-                        {{ $treino->nome }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        {{-- Personal --}}
-        <div class="mb-3">
-            <label class="form-label">Personal</label>
-            <select name="personal_id" class="form-control" required>
-                <option value="">Selecione</option>
-                @foreach($personals as $personal)
-                    <option value="{{ $personal->id }}" {{ $ficha->personal_id == $personal->id ? 'selected' : '' }}>
-                        {{ $personal->nome }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        {{-- Exercício --}}
-        <div class="mb-3">
-            <label class="form-label">Exercício</label>
-            <input type="text" name="exercicio" class="form-control" value="{{ $ficha->exercicio }}" required>
-        </div>
-
-        {{-- Séries, carga e repetição --}}
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Séries</label>
-                <input type="number" name="series" class="form-control" value="{{ $ficha->series }}">
-            </div>
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Carga (kg)</label>
-                <input type="number" name="carga" class="form-control" value="{{ $ficha->carga }}">
-            </div>
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Repetições</label>
-                <input type="number" name="repeticao" class="form-control" value="{{ $ficha->repeticao }}">
-            </div>
-        </div>
-
-        {{-- Botões --}}
         <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-danger">Atualizar</button>
-            <a href="{{ route('fichas.index') }}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-danger">
+                Atualizar
+            </button>
+
+            <a href="{{ route('fichas.index') }}" class="btn btn-secondary">
+                Cancelar
+            </a>
         </div>
 
     </form>

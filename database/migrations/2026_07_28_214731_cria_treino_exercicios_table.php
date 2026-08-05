@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('series')->default(3);
             $table->string('repeticoes')->default('12');
             $table->string('carga')->nullable();
-            $table->string('descanso')->default('60s');
+            $table->string('descanso')->nullable();;
             $table->text('observacoes')->nullable();
             $table->integer('ordem')->default(0);
 

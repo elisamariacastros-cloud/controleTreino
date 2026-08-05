@@ -30,6 +30,7 @@
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('home') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('alunos.index') }}">Alunos</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('treinos.index') }}">Treinos</a></li>
+                <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('exercicios.index') }}">Exercícios</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('fichas.index') }}">Fichas</a></li>
                 <li class="nav-item">
                     <a class="nav-link text-white fw-bold" href="{{ route('logout') }}"

@@ -44,7 +44,7 @@ class FichaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'aluno_id' => 'required|exists:alunos,id',
-            'name' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
             'data_inicio' => 'required|date',
             'data_fim' => 'nullable|date|after_or_equal:data_inicio',
             'observacoes' => 'nullable|string',
@@ -109,7 +109,7 @@ class FichaController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|string|max:255',
+            'nome' => 'sometimes|string|max:255',
             'data_inicio' => 'sometimes|date',
             'data_fim' => 'nullable|date|after_or_equal:data_inicio',
             'observacoes' => 'nullable|string',
@@ -121,7 +121,7 @@ class FichaController extends Controller
         }
 
         $ficha->fill($request->only([
-            'name', 'data_inicio', 'data_fim', 'observacoes', 'aluno_id'
+            'nome', 'data_inicio', 'data_fim', 'observacoes', 'aluno_id'
         ]));
         $ficha->save();
 

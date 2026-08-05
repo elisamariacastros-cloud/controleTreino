@@ -42,10 +42,18 @@ class Treino extends Model
     }
 
     /**
-     * Relacionamento direto com a tabela pivô (caso precise de mais detalhes)
+     * Relacionamento direto com a tabela pivô 
      */
     public function treinoExercicios()
     {
         return $this->hasMany(TreinoExercicio::class);
     }
+    public function getTipoAttribute($value)
+{
+    return strtoupper($value);
 }
+
+
+
+}
+
