@@ -1,0 +1,20 @@
+kind: wasmer.io/App.v0
+name: controle-treino
+owner: elisamariacastros-cloud
+package: .
+env:
+  APP_ENV: staging
+  APP_DEBUG: "true"
+  APP_KEY: "base64:Cp3O2zawBwD6Khy4D39VN1TcTFfutoFYTarkqdAdERs="
+  DB_CONNECTION: mysql
+  SESSION_DRIVER: database
+  CACHE_STORE: database
+  QUEUE_CONNECTION: sync
+  LOG_CHANNEL: stderr
+capabilities:
+  database:
+    engine: mysql
+locality:
+  regions:
+    - us-losa1
+app_id: da_Ko6IotJUD7A8
