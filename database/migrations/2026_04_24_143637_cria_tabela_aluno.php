@@ -22,7 +22,6 @@ return new class extends Migration
         $table->decimal('peso', 5, 2)->nullable();
         $table->decimal('altura', 3, 2)->nullable();
         $table->string('objetivo', 100)->nullable();
-        $table->softDeletes();
         $table->timestamps();
         });
     }

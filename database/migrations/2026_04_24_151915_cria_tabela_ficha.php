@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('aluno_id')
-                  ->constrained('alunos');
+            ->constrained('alunos')
+            ->cascadeOnDelete();
 
             $table->string('nome');
 
@@ -20,8 +21,6 @@ return new class extends Migration
             $table->date('data_fim')->nullable();
 
             $table->text('observacoes')->nullable();
-
-            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -44,7 +44,7 @@
                     </a>
 
                     <!-- Editar -->
-                    <a href="{{ route('alunos.edit', $aluno->id) }}" class="btn btn-sm btn-link text-danger " title="Editar">
+                    <a href="{{ route('alunos.edit', $aluno->id) }}" class="btn btn-sm btn-link text-danger" title="Editar">
                         <i class="bi bi-pencil"></i>
                     </a>
 
@@ -52,7 +52,7 @@
                     <form action="{{ route('alunos.destroy', $aluno->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-link text-danger" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir?')">
+                        <button type="submit" class="btn btn-sm btn-link text-danger" title="Excluir" onclick="return confirm('Atenção: ao excluir este aluno, todas as fichas e treinos associados a ele também serão excluídos permanentemente. Esta ação não pode ser desfeita. Deseja continuar?')">
                             <i class="bi bi-trash"></i>
                         </button>
                     </form>

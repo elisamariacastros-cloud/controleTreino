@@ -12,14 +12,15 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('ficha_id')
-                  ->constrained('fichas');
+            ->constrained('fichas')
+            ->cascadeOnDelete();
 
             $table->enum('tipo', ['a', 'b', 'c', 'd']);
 
             $table->string('nome');
             $table->text('descricao')->nullable();
 
-            $table->softDeletes();
+            
             $table->timestamps();
         });
     }

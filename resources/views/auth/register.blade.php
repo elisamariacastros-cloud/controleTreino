@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="nome" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="nome" class="col-md-4 col-form-label text-md-end">{{ __('Nome') }}</label>
                             <div class="col-md-6">
                                 <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome" autofocus>
                                 @error('nome')
@@ -23,26 +23,32 @@
                             </div>
                         </div>
 
+<div class="row mb-3">
+    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
+    <div class="col-md-6">
+        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+        @error('email')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
 
-                        
-                                <div class="form-group">
-                <label>CREF (Código do Personal)</label>
-                <input type="text" name="cref" class="form-control" placeholder="Ex: 12345" required>
-            </div>
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                                <div class="row mb-3">
+    <label for="cref" class="col-md-4 col-form-label text-md-end">{{ __('CREF (Código do Personal)') }}</label>
+    <div class="col-md-6">
+        <input id="cref" type="text" class="form-control @error('cref') is-invalid @enderror" name="cref" value="{{ old('cref') }}" placeholder="Ex: 12345" required autocomplete="cref">
+        @error('cref')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Senha') }}</label>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                 @error('password')
@@ -54,7 +60,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmar Senha') }}</label>
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
@@ -62,8 +68,8 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                <button type="submit" class="btn btn-danger">
+                                    {{ __('Registrar') }}
                                 </button>
                             </div>
                         </div>

@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('treino_id')
-                  ->constrained('treinos');
+      ->constrained('treinos')
+      ->cascadeOnDelete();
 
             $table->foreignId('exercicio_id')
                   ->constrained('exercicios');
