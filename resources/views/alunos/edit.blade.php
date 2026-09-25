@@ -33,6 +33,18 @@
                 required>
         </div>
 
+                <!-- E-mail (obrigatório e único) - login do aluno no app -->
+        <div class="mb-3">
+            <label class="form-label">E-mail</label>
+            <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="aluno@email.com" required>
+        </div>
+
+        <!-- Senha (obrigatória) - o personal define, o aluno pode trocar depois -->
+        <div class="mb-3">
+            <label class="form-label">Senha</label>
+            <input type="password" name="password" class="form-control" placeholder="Mínimo 6 caracteres" required minlength="6">
+        </div>
+
         <!-- Matrícula (obrigatório e único) -->
         <div class="mb-3">
             <label class="form-label">Matrícula</label>

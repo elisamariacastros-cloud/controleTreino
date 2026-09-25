@@ -32,6 +32,18 @@
             <input type="text" name="nome" class="form-control" placeholder="Nome completo" required>
         </div>
 
+        <!-- E-mail (obrigatório e único) -->
+        <div class="mb-3">
+            <label class="form-label">E-mail</label>
+            <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="aluno@email.com" required>
+        </div>
+
+        <!-- Senha (obrigatória) -->
+        <div class="mb-3">
+            <label class="form-label">Senha</label>
+            <input type="password" name="password" class="form-control" placeholder="Mínimo 6 caracteres" required minlength="6">
+        </div>
+        
         <!-- Data de Nascimento (opcional) -->
         <div class="mb-3">
             <label class="form-label">Data de Nascimento</label>
