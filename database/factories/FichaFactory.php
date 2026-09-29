@@ -14,7 +14,7 @@ class FichaFactory extends Factory
     {
         return [
             'aluno_id' => Aluno::factory(),
-            'name' => $this->faker->randomElement(['Ficha A', 'Ficha B', 'Ficha C', 'Ficha C']),
+            'nome' => $this->faker->randomElement(['Ficha A', 'Ficha B', 'Ficha C']),
             'data_inicio' => $this->faker->date(),
             'data_fim' => $this->faker->date(),
             'observacoes' => $this->faker->optional()->sentence(),

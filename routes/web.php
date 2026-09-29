@@ -6,7 +6,7 @@ use App\Http\Controllers\FichaController;
 use App\Http\Controllers\AlunoController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ExercicioController;
-
+use Illuminate\Support\Facades\Artisan;
 
 Auth::routes(); 
 
@@ -47,3 +47,4 @@ Route::get('treinos/create/{ficha_id}', [TreinoController::class, 'create'])->na
 
 // Reordenar exercícios do treino (AJAX)
 Route::post('treinos/{id}/reorder', [TreinoController::class, 'reorder'])->name('treinos.reorder')->middleware('auth');
+
