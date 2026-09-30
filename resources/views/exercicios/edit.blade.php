@@ -3,7 +3,9 @@
 @section('content')
 <div class="container mt-5">
 
-    <h2 class="mb-4">Editar Exercício</h2>
+    <h2 class="mb-4">
+        <i class="bi bi-pencil-square"></i> Editar Exercício
+    </h2>
 
     @if($errors->any())
         <div class="alert alert-danger">
@@ -20,14 +22,18 @@
         @method('PUT')
 
         <div class="card">
-            <div class="card-body">
+            <div class="card-header bg-danger text-white">
+                <i class="bi bi-dumbbell"></i> Dados do Exercício
+            </div>
+            <div class="card-body table-light">
+
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome do Exercício *</label>
-                    <input 
-                        type="text" 
-                        name="nome" 
+                    <input
+                        type="text"
+                        name="nome"
                         id="nome"
-                        class="form-control @error('nome') is-invalid @enderror" 
+                        class="form-control @error('nome') is-invalid @enderror"
                         placeholder="Ex: Supino Reto"
                         value="{{ old('nome', $exercicio->nome) }}"
                         required
@@ -39,10 +45,10 @@
 
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição</label>
-                    <textarea 
-                        name="descricao" 
+                    <textarea
+                        name="descricao"
                         id="descricao"
-                        class="form-control @error('descricao') is-invalid @enderror" 
+                        class="form-control @error('descricao') is-invalid @enderror"
                         rows="4"
                         placeholder="Descreva o exercício, músculos trabalhados, execução..."
                     >{{ old('descricao', $exercicio->descricao) }}</textarea>
@@ -50,6 +56,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
             </div>
         </div>
 

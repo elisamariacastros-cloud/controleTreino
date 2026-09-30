@@ -12,8 +12,8 @@
         </a>
     </div>
 
-    <table class="table table-danger table-striped" id="tabelaAlunos">
-        <thead>
+    <table class="table table-light table-striped table-hover" id="tabelaAlunos">
+    <thead class="table-danger">
             <tr>
                 <th>ID</th>
                 <th>Matrícula</th>

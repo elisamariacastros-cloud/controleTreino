@@ -2,10 +2,13 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4">Detalhes do Aluno</h1>
-    
+    <h2 class="mb-4">Detalhes do Aluno</h2>
+
     <div class="card">
-        <div class="card-body">
+        <div class="card-header bg-danger text-white">
+            <i class="bi bi-person-badge"></i> Informações do Aluno
+        </div>
+        <div class="card-body table-light">
             <div class="row">
                 <div class="col-md-6">
                     <p><strong>ID:</strong> {{ $aluno->id }}</p>

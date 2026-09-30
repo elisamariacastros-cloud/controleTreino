@@ -18,8 +18,8 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-danger table-striped table-hover" id="treinosTable">
-            <thead>
+    <table class="table table-light table-striped table-hover" id="treinosTable">
+        <thead class="table-danger">
                 <tr>
                     <th>ID</th>
                     <th>Ficha</th>
@@ -55,10 +55,6 @@
                                 <i class="bi bi-pencil"></i>
                             </a>
 
-                            <!-- Adicionar Exercício -->
-                            <a href="{{ route('treinos.create', $treino->id) }}" class="btn btn-sm btn-link text-success" title="Adicionar Exercício">
-                                <i class="bi bi-plus-circle"></i>
-                            </a>
 
                             <!-- Excluir -->
                             <form action="{{ route('treinos.destroy', $treino->id) }}" method="POST" style="display:inline;">

@@ -18,7 +18,7 @@
         </a>
     </div>
 
-    <table class="table table-danger table-striped table-hover" id="fichasTable">
+    <table class="table table-light table-striped table-hover" id="fichasTable">
         <thead class="table-danger">
             <tr>
                 <th>ID</th>

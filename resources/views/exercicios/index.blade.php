@@ -18,9 +18,8 @@
         </a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-danger table-striped table-hover" id="exerciciosTable">
-            <thead>
+    <table class="table table-light table-striped table-hover" id="exerciciosTable">
+    <thead class="table-danger">
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>

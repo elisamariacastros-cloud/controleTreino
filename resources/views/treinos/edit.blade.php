@@ -3,7 +3,9 @@
 @section('content')
 <div class="container mt-5">
 
-    <h2 class="mb-4">Editar Treino</h2>
+    <h2 class="mb-4">
+        <i class="bi bi-pencil-square"></i> Editar Treino
+    </h2>
 
     @if($errors->any())
         <div class="alert alert-danger">
@@ -22,9 +24,9 @@
         {{-- Dados do Treino --}}
         <div class="card mb-4">
             <div class="card-header bg-danger text-white">
-                <strong>Informações do Treino</strong>
+                <i class="bi bi-info-circle"></i> <strong>Informações do Treino</strong>
             </div>
-            <div class="card-body">
+            <div class="card-body table-light">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="ficha_id" class="form-label">Ficha do Aluno *</label>
@@ -57,11 +59,11 @@
 
                     <div class="col-md-12 mb-3">
                         <label for="nome" class="form-label">Nome do Treino *</label>
-                        <input 
-                            type="text" 
-                            name="nome" 
+                        <input
+                            type="text"
+                            name="nome"
                             id="nome"
-                            class="form-control @error('nome') is-invalid @enderror" 
+                            class="form-control @error('nome') is-invalid @enderror"
                             placeholder="Ex: Treino A - Peito e Tríceps"
                             value="{{ old('nome', $treino->nome) }}"
                             required
@@ -73,10 +75,10 @@
 
                     <div class="col-md-12 mb-3">
                         <label for="descricao" class="form-label">Descrição</label>
-                        <textarea 
-                            name="descricao" 
+                        <textarea
+                            name="descricao"
                             id="descricao"
-                            class="form-control @error('descricao') is-invalid @enderror" 
+                            class="form-control @error('descricao') is-invalid @enderror"
                             rows="2"
                             placeholder="Observações sobre o treino..."
                         >{{ old('descricao', $treino->descricao) }}</textarea>
@@ -91,18 +93,18 @@
         {{-- Exercícios do Treino --}}
         <div class="card mb-4">
             <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                <span><strong>Exercícios do Treino</strong></span>
+                <span><i class="bi bi-list-check"></i> <strong>Exercícios do Treino</strong></span>
                 <button type="button" class="btn btn-light btn-sm" onclick="adicionarExercicio()">
                     <i class="bi bi-plus-circle"></i> Adicionar Exercício
                 </button>
             </div>
-            <div class="card-body">
+            <div class="card-body table-light">
                 <div id="exercicios-container">
                     @php $index = 0; @endphp
-                    
+
                     @forelse($treino->exercicios as $exercicio)
                         <div class="exercicio-item card mb-3 border-danger">
-                            <div class="card-body">
+                            <div class="card-body table-light">
                                 <div class="row">
                                     {{-- ID do exercício (para editar) --}}
                                     <input type="hidden" name="exercicios[{{ $index }}][id]" value="{{ $exercicio->pivot->id }}">
@@ -113,7 +115,7 @@
                                         <select name="exercicios[{{ $index }}][exercicio_id]" class="form-control" required>
                                             <option value="">Selecione</option>
                                             @foreach($exercicios as $exercicioOpcao)
-                                                <option value="{{ $exercicioOpcao->id }}" 
+                                                <option value="{{ $exercicioOpcao->id }}"
                                                     {{ old('exercicios.' . $index . '.exercicio_id', $exercicio->id) == $exercicioOpcao->id ? 'selected' : '' }}>
                                                     {{ $exercicioOpcao->nome }}
                                                 </option>
@@ -122,45 +124,45 @@
                                     </div>
                                     <div class="col-md-2 mb-2">
                                         <label class="form-label">Séries *</label>
-                                        <input type="number" 
-                                            name="exercicios[{{ $index }}][series]" 
-                                            class="form-control" 
-                                            placeholder="Ex: 4" 
-                                            min="1" 
-                                            max="10" 
+                                        <input type="number"
+                                            name="exercicios[{{ $index }}][series]"
+                                            class="form-control"
+                                            placeholder="Ex: 4"
+                                            min="1"
+                                            max="10"
                                             value="{{ old('exercicios.' . $index . '.series', $exercicio->pivot->series) }}"
                                             required>
                                     </div>
                                     <div class="col-md-2 mb-2">
                                         <label class="form-label">Repetições *</label>
-                                        <input type="text" 
-                                            name="exercicios[{{ $index }}][repeticoes]" 
-                                            class="form-control" 
-                                            placeholder="Ex: 12" 
+                                        <input type="text"
+                                            name="exercicios[{{ $index }}][repeticoes]"
+                                            class="form-control"
+                                            placeholder="Ex: 12"
                                             value="{{ old('exercicios.' . $index . '.repeticoes', $exercicio->pivot->repeticoes) }}"
                                             required>
                                     </div>
                                     <div class="col-md-2 mb-2">
                                         <label class="form-label">Carga</label>
-                                        <input type="text" 
-                                            name="exercicios[{{ $index }}][carga]" 
-                                            class="form-control" 
+                                        <input type="text"
+                                            name="exercicios[{{ $index }}][carga]"
+                                            class="form-control"
                                             placeholder="Ex: 20kg"
                                             value="{{ old('exercicios.' . $index . '.carga', $exercicio->pivot->carga) }}">
                                     </div>
                                     <div class="col-md-2 mb-2">
                                         <label class="form-label">Descanso</label>
-                                        <input type="text" 
-                                            name="exercicios[{{ $index }}][descanso]" 
-                                            class="form-control" 
+                                        <input type="text"
+                                            name="exercicios[{{ $index }}][descanso]"
+                                            class="form-control"
                                             placeholder="Ex: 60s"
                                             value="{{ old('exercicios.' . $index . '.descanso', $exercicio->pivot->descanso) }}">
                                     </div>
                                     <div class="col-md-10 mb-2">
                                         <label class="form-label">Observações</label>
-                                        <input type="text" 
-                                            name="exercicios[{{ $index }}][observacoes]" 
-                                            class="form-control" 
+                                        <input type="text"
+                                            name="exercicios[{{ $index }}][observacoes]"
+                                            class="form-control"
                                             placeholder="Observações sobre o exercício..."
                                             value="{{ old('exercicios.' . $index . '.observacoes', $exercicio->pivot->observacoes) }}">
                                     </div>
@@ -199,7 +201,7 @@
 {{-- Template para exercício (usado pelo JavaScript) --}}
 <template id="template-exercicio">
     <div class="exercicio-item card mb-3 border-danger">
-        <div class="card-body">
+        <div class="card-body table-light">
             <div class="row">
                 <div class="col-md-4 mb-2">
                     <label class="form-label">Exercício *</label>
@@ -242,20 +244,19 @@
 </template>
 
 <script>
-     let exercicioIndex = parseInt('{{ $treino->exercicios->count() }}');
+    let exercicioIndex = parseInt('{{ $treino->exercicios->count() }}');
 
     function adicionarExercicio() {
         const template = document.getElementById('template-exercicio');
         const container = document.getElementById('exercicios-container');
         const semExercicios = document.getElementById('sem-exercicios');
-        
+
         if (semExercicios) {
             semExercicios.remove();
         }
 
         const clone = template.content.cloneNode(true);
-        
-        // Substitui __INDEX__ pelo índice atual
+
         let html = clone.querySelector('.card-body').innerHTML;
         html = html.replace(/__INDEX__/g, exercicioIndex);
         html = html.replace('__ORDEM__', exercicioIndex + 1);
@@ -269,7 +270,7 @@
         if (confirm('Remover este exercício do treino?')) {
             const item = button.closest('.exercicio-item');
             item.remove();
-            
+
             const container = document.getElementById('exercicios-container');
             if (container.children.length === 0) {
                 container.innerHTML = `
