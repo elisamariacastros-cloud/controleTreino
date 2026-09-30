@@ -6,13 +6,20 @@
     <h2 class="mb-4">Gerenciar Exercícios</h2>
 
     <div class="d-flex justify-content-between mb-3">
-        <a href="{{ route('exercicios.create') }}" class="btn btn-danger">
+        <input
+            type="text"
+            class="form-control w-50"
+            placeholder="Buscar exercício..."
+            id="searchExercicio"
+            onkeyup="filterTable()">
+
+        <a href="{{ route('exercicios.create') }}" class="btn btn-danger ms-3">
             + Novo Exercício
         </a>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-danger table-striped table-hover">
+        <table class="table table-danger table-striped table-hover" id="exerciciosTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -52,4 +59,17 @@
     </div>
 
 </div>
+
+<script>
+function filterTable() {
+    const termo = document.getElementById('searchExercicio').value.toLowerCase();
+    const linhas = document.querySelectorAll('#exerciciosTable tbody tr');
+
+    linhas.forEach(function (linha) {
+        const texto = linha.textContent.toLowerCase();
+        linha.style.display = texto.includes(termo) ? '' : 'none';
+    });
+}
+</script>
+
 @endsection

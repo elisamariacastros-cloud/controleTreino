@@ -9,14 +9,16 @@
         <input
             type="text"
             class="form-control w-50"
-            placeholder="Buscar fichas...">
+            placeholder="Buscar fichas..."
+            id="searchFicha"
+            onkeyup="filterTable()">
 
         <a href="{{ route('fichas.create') }}" class="btn btn-danger ms-3">
             Criar Ficha
         </a>
     </div>
 
-    <table class="table table-danger table-striped table-hover">
+    <table class="table table-danger table-striped table-hover" id="fichasTable">
         <thead class="table-danger">
             <tr>
                 <th>ID</th>
@@ -58,26 +60,26 @@
 
                             <div class="d-flex gap-2">
 
-                            
-                            <a href="{{ route('fichas.show', $ficha->id) }}"
-                            class="btn btn-sm btn-link text-danger"
-                            title="Visualizar">
-                                <i class="bi bi-eye"></i>
-                            </a>
+                                <a href="{{ route('fichas.show', $ficha->id) }}"
+                                   class="btn btn-sm btn-link text-danger"
+                                   title="Visualizar">
+                                    <i class="bi bi-eye"></i>
+                                </a>
 
-                            <form action="{{ route('fichas.destroy', $ficha->id) }}"
-                                  method="POST"
-                                  onsubmit="return confirm('Deseja excluir esta ficha?')">
+                                <form action="{{ route('fichas.destroy', $ficha->id) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Deseja excluir esta ficha?')">
 
-                                @csrf
-                                @method('DELETE')
+                                    @csrf
+                                    @method('DELETE')
 
-                                <button type="submit" class="btn btn-sm btn-link text-danger">
-                                <i class="bi bi-trash"></i>
-                                </button>
+                                    <button type="submit" class="btn btn-sm btn-link text-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
 
-                            </form>
+                                </form>
 
+                            </div>
                         </div>
                     </td>
 
@@ -93,4 +95,17 @@
     </table>
 
 </div>
+
+<script>
+function filterTable() {
+    const termo = document.getElementById('searchFicha').value.toLowerCase();
+    const linhas = document.querySelectorAll('#fichasTable tbody tr');
+
+    linhas.forEach(function (linha) {
+        const texto = linha.textContent.toLowerCase();
+        linha.style.display = texto.includes(termo) ? '' : 'none';
+    });
+}
+</script>
+
 @endsection

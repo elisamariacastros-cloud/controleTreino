@@ -6,13 +6,13 @@
     <h2 class="mb-4">Gerenciar Alunos</h2>
 
     <div class="d-flex justify-content-between mb-3">
-        <input type="text" class="form-control w-50" placeholder="Buscar aluno...">
+        <input type="text" id="buscaAluno" class="form-control w-50" placeholder="Buscar aluno..." onkeyup="filtrarAlunos()">
         <a href="{{ route('alunos.create') }}" class="btn btn-danger ms-3">
             Criar aluno
         </a>
     </div>
 
-    <table class="table table-danger table-striped">
+    <table class="table table-danger table-striped" id="tabelaAlunos">
         <thead>
             <tr>
                 <th>ID</th>
@@ -31,7 +31,7 @@
             <tr>
                 <td>{{ $aluno->id }}</td>
                 <td>{{ $aluno->matricula }}</td>
-                <td>{{ $aluno->nome }}</td>
+                <td class="nome-aluno">{{ $aluno->nome }}</td>
                 <td>{{ $aluno->telefone ?? '-' }}</td>
                 <td>{{ $aluno->data_nascimento ? date('d/m/Y', strtotime($aluno->data_nascimento)) : '-' }}</td>
                 <td>{{ $aluno->peso ?? '-' }}</td>
@@ -63,4 +63,16 @@
     </table>
 
 </div>
+
+<script>
+function filtrarAlunos() {
+    const termo = document.getElementById('buscaAluno').value.toLowerCase();
+    const linhas = document.querySelectorAll('#tabelaAlunos tbody tr');
+
+    linhas.forEach(function (linha) {
+        const nome = linha.querySelector('.nome-aluno').textContent.toLowerCase();
+        linha.style.display = nome.includes(termo) ? '' : 'none';
+    });
+}
+</script>
 @endsection

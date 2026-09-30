@@ -91,6 +91,16 @@
 
 </div>
 
+<script>
+function filterTable() {
+    const termo = document.getElementById('searchTreino').value.toLowerCase();
+    const linhas = document.querySelectorAll('#treinosTable tbody tr');
 
+    linhas.forEach(function (linha) {
+        const texto = linha.textContent.toLowerCase();
+        linha.style.display = texto.includes(termo) ? '' : 'none';
+    });
+}
+</script>
 
 @endsection
