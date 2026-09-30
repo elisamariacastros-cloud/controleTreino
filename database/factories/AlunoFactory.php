@@ -16,7 +16,7 @@ class AlunoFactory extends Factory
             'user_id' => User::factory(),
             'nome' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => 'senha123', // o cast "hashed" do model Aluno faz o hash sozinho
+            'password' => 'senha123', 
             'matricula' => $this->faker->unique()->randomNumber(8),
             'data_nascimento' => $this->faker->date(),
             'telefone' => $this->faker->phoneNumber(),
