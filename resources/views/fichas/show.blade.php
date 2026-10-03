@@ -52,7 +52,7 @@
                         <div class="card-body table-light">
                             @if($treino->exercicios->count() > 0)
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-light table-striped table-hover">
                                         <thead class="table-danger">
                                             <tr>
                                                 <th>Ordem</th>

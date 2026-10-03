@@ -38,8 +38,8 @@
                 <div class="mb-3">
                     <label class="form-label">E-mail</label>
                     <input type="email" name="email" class="form-control"
-                        value="{{ old('email', $aluno->user->email ?? '') }}"
-                        placeholder="aluno@email.com" required>
+    value="{{ old('email', $aluno->email) }}"
+    placeholder="aluno@email.com" required>
                 </div>
 
                 <div class="mb-3">
@@ -59,7 +59,7 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Data de Nascimento</label>
                         <input type="date" name="data_nascimento" class="form-control"
-                            value="{{ old('data_nascimento', $aluno->data_nascimento) }}">
+    value="{{ old('data_nascimento', $aluno->data_nascimento ? \Carbon\Carbon::parse($aluno->data_nascimento)->format('Y-m-d') : '') }}">
                     </div>
 
                     <div class="col-md-6 mb-3">

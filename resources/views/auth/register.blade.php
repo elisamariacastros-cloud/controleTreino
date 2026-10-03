@@ -42,12 +42,12 @@
                                 <div class="row mb-3">
     <label for="cref" class="col-md-4 col-form-label text-md-end">{{ __('CREF (Código do Personal)') }}</label>
     <div class="col-md-6">
-        <input id="cref" type="text" class="form-control @error('cref') is-invalid @enderror" name="cref" value="{{ old('cref') }}" placeholder="Ex: 12345" required autocomplete="cref">
-        @error('cref')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+        <input id="cref" type="text" class="form-control @error('cref') is-invalid @enderror"
+       name="cref" value="{{ old('cref') }}" placeholder="000000-G/MG" maxlength="11">
+
+@error('cref')
+    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+@enderror
     </div>
 </div>
 

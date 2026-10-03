@@ -186,7 +186,16 @@ class TreinoController extends Controller
         return redirect()->route('fichas.show', $ficha_id)
             ->with('success', 'Treino excluído com sucesso!');
     }
-
+/**
+ * Mostra um treino específico.
+ */
+public function show($id)
+{
+    $treino = Treino::with(['ficha.aluno', 'exercicios'])
+        ->findOrFail($id);
+    
+    return view('treinos.show', compact('treino'));
+}
     /**
      * Reordenar exercícios (AJAX).
      */

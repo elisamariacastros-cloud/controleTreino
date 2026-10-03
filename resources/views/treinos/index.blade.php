@@ -46,7 +46,7 @@
                     <td>
                         <div class="btn-group" role="group">
                             <!-- Ver-->
-                            <a href="{{ route('fichas.show', $treino->ficha_id) }}" class="btn btn-sm btn-link text-danger" title="Ver na Ficha">
+                            <a href="{{ route('treinos.show', $treino->id) }}" class="btn btn-sm btn-link text-danger" title="Ver na Ficha">
                                 <i class="bi bi-eye"></i>
                             </a>
 

@@ -36,18 +36,18 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Data Início</label>
-                        <input type="date" name="data_inicio" class="form-control"
-                            value="{{ old('data_inicio', $ficha->data_inicio) }}" required>
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Data Início</label>
+        <input type="date" name="data_inicio" class="form-control"
+            value="{{ old('data_inicio', $ficha->data_inicio ? \Carbon\Carbon::parse($ficha->data_inicio)->format('Y-m-d') : '') }}" required>
+    </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Data Fim</label>
-                        <input type="date" name="data_fim" class="form-control"
-                            value="{{ old('data_fim', $ficha->data_fim) }}">
-                    </div>
-                </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Data Fim</label>
+        <input type="date" name="data_fim" class="form-control"
+            value="{{ old('data_fim', $ficha->data_fim ? \Carbon\Carbon::parse($ficha->data_fim)->format('Y-m-d') : '') }}">
+    </div>
+</div>
 
                 <div class="mb-3">
                     <label class="form-label">Observações</label>

@@ -9,6 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -18,6 +19,7 @@
 </head>
 <body>
     <div id="app">
+        
        <nav class="navbar navbar-expand-lg bg-danger text-uppercase fixed-top" id="mainNav">
     <div class="container">
         <a class="navbar-brand text-white" href="{{ route('home') }}">Treino+</a>
@@ -28,10 +30,12 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('home') }}">Home</a></li>
+                 @unless (request()->routeIs('home'))
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('alunos.index') }}">Alunos</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('treinos.index') }}">Treinos</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('exercicios.index') }}">Exercícios</a></li>
                 <li class="nav-item"><a class="nav-link text-white fw-bold" href="{{ route('fichas.index') }}">Fichas</a></li>
+                @endunless
                 <li class="nav-item">
                     <a class="nav-link text-white fw-bold" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
