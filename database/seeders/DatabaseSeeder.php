@@ -3,25 +3,43 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Aluno;
+use App\Models\Exercicio;
+use App\Models\Ficha;
 use App\Models\Treino;
-use App\Models\Ficha;   
-use App\Models\TreinoExercicio;   
+use App\Models\TreinoExercicio;
 
 class DatabaseSeeder extends Seeder
 {
-   public function run()
-{
-    // Cria 5 personals (cada um com seu user)
-    User::factory(5)->create();
-    // Cria 20 alunos (cada um com seu user e personal aleatório)
-    Aluno::factory(20)->create();
-    // Cria 30 fichas (cada uma com aluno aleatório)
-    Ficha::factory(5)->create();
-    // Cria 50 treinos (cada um com ficha aleatória)
-    Treino::factory(10)->create();
-    // Cria 100 treino_exercicios (com treino e exercício aleatórios)
-    TreinoExercicio::factory(20)->create();
-}
+    public function run(): void
+    {
+        // 5 personals
+        User::factory(5)->create();
+
+        // Aluno de teste, com login conhecido
+        $aluno = Aluno::factory()->create([
+            'nome'     => 'Aluno Teste',
+            'email'    => 'aluno@teste.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        // Outros 19 alunos
+        Aluno::factory(19)->create();
+
+        // 15 exercícios
+        Exercicio::factory(15)->create();
+
+        // Ficha completa do aluno de teste: 1 ficha, 3 treinos, 4 exercícios em cada
+        $ficha = Ficha::factory()->create(['aluno_id' => $aluno->id]);
+
+        Treino::factory(3)->create(['ficha_id' => $ficha->id])
+            ->each(function ($treino) {
+                TreinoExercicio::factory(4)->create(['treino_id' => $treino->id]);
+            });
+
+       
+        Ficha::factory(5)->create();
+    }
 }
