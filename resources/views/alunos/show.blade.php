@@ -13,6 +13,7 @@
                 <div class="col-md-6">
                     <p><strong>ID:</strong> {{ $aluno->id }}</p>
                     <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
+                    <p><strong>Email:</strong> {{ $aluno->email }}</p>
                     <p><strong>Matrícula:</strong> {{ $aluno->matricula }}</p>
                     <p><strong>Data Nascimento:</strong> {{ $aluno->data_nascimento ? date('d/m/Y', strtotime($aluno->data_nascimento)) : '-' }}</p>
                     <p><strong>Telefone:</strong> {{ $aluno->telefone ?? '-' }}</p>
