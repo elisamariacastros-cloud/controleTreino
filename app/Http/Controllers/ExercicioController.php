@@ -43,14 +43,6 @@ class ExercicioController extends Controller
             ->with('success', 'Exercício criado com sucesso!');
     }
 
-    /**
-     * Mostra um exercício específico.
-     */
-    public function show($id)
-    {
-        $exercicio = Exercicio::findOrFail($id);
-        return view('exercicios.show', compact('exercicio'));
-    }
 
     /**
      * Mostra formulário para editar exercício.

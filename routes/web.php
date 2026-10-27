@@ -42,9 +42,6 @@ Route::resource('alunos', AlunoController::class)->middleware('auth');
 // CRUD Exercicio
 Route::resource('exercicios', ExercicioController::class)->middleware('auth');
 
-// Criar treino com ficha_id
-Route::get('treinos/create/{ficha_id}', [TreinoController::class, 'create'])->name('treinos.create')->middleware('auth');
-
 // Reordenar exercícios do treino (AJAX)
 Route::post('treinos/{id}/reorder', [TreinoController::class, 'reorder'])->name('treinos.reorder')->middleware('auth');
 

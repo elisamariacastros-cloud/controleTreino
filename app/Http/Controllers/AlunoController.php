@@ -38,7 +38,7 @@ class AlunoController extends Controller
             'user_id' => Auth::id(),
             'nome' => $request->nome,
             'email' => $request->email,
-            'password' => $request->password, // o cast "hashed" do model faz o hash
+            'password' => $request->password, 
             'matricula' => $request->matricula,
             'data_nascimento' => $request->data_nascimento,
             'telefone' => $request->telefone,
