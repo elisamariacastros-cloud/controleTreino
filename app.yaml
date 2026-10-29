@@ -16,5 +16,5 @@ capabilities:
     engine: mysql
 locality:
   regions:
-    - us-losa1
+    - fr-roub1
 app_id: da_Ko6IotJUD7A8
